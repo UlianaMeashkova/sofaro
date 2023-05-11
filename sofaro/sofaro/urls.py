@@ -15,12 +15,25 @@ Including another URLconf
 """
 
 
+from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from products.views import index
+from users.views import users, register, login_view, logout_view
 
 urlpatterns = [
-   path('admin/', admin.site.urls),
-   path('', index, name='index'),
+    path('users/', users, name="users"),
+    path('register/', register, name="register"),
+    path('login/', login_view, name="login"),
+    path('logout/', logout_view, name="logout"),
+    path('', index, name="index"),
 ]
+
+# if settings.DEBUG:
+#     from django.conf.urls.static import static
+#     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+#     # Serve static and media files from development server
+#     urlpatterns += staticfiles_urlpatterns()
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
