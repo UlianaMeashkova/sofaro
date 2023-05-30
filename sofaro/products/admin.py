@@ -9,11 +9,12 @@ class PurchaseAdminInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("title", "price", "color", "description", "created_at")
-    fields = ("title", "image", "price","price_usd", "color", "description", "created_at")
+    list_display = ("title", "price", "country", "description", "created_at")
+    fields = ("title", "image", "price","price_usd", "country", "description", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
     inlines = (PurchaseAdminInline,)
+    print(3333)
 
     def save_form(self, request, form, change):
 
@@ -27,5 +28,5 @@ class PurchaseAdmin(admin.ModelAdmin):
     fields = ("user", "product", "count", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("user__email", "product__title")
-
+print(444)
 # # Register your models here.
