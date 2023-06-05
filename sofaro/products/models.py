@@ -11,7 +11,7 @@ COUNTRY_CHOICES = (
     ("Египет", "ЕГИПЕТ"),
     ("Греция", "ГРЕЦИЯ")
 )
-print(111)
+
 
 class Product(models.Model):
     external_id = models.CharField(max_length=255, blank=True, null=True)
@@ -29,12 +29,12 @@ class Product(models.Model):
     def __str__(self):
         return f"Product: {self.title} - {self.price}"
     
-    print(2222)
+
 class Purchase(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="purchases"
     )
-    print(555)
+ 
     product = models.ForeignKey(
         "products.Product", on_delete=models.CASCADE, related_name="purchases"
     )
@@ -58,4 +58,4 @@ class Hotels(models.Model):
     )
 
     def __str__(self):
-        return f"Hotels: {self.title} - {self.price}"
+        return f"Hotels: {self.title} - {self.country}"

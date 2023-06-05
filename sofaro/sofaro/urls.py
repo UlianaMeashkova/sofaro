@@ -16,7 +16,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
-from products.views import index
+from products.views import index, hotels
 from users.views import users, register, login_view, logout_view
 
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
     path('register/', register, name="register"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
+    path('hotels/', hotels, name="hotels"),
     path('', index, name="index"),
 ]
  
