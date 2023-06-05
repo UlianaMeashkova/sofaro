@@ -31,6 +31,7 @@ urlpatterns = [
     path('logout/', logout_view, name="logout"),
     path('', index, name="index"),
 ]
+ 
 
 if settings.DEBUG:
     from django.conf.urls.static import static

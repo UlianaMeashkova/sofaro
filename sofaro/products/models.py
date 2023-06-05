@@ -46,3 +46,16 @@ class Purchase(models.Model):
 
 
 
+class Hotels(models.Model):
+    external_id = models.CharField(max_length=255, blank=True, null=True)
+    country = models.CharField(max_length=32, choices=COUNTRY_CHOICES, default= "Турция")
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
+    excerpt = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, db_index=True
+    )
+
+    def __str__(self):
+        return f"Hotels: {self.title} - {self.price}"

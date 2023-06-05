@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Product, Purchase
+from products.models import Product, Purchase, Hotels
 
 
 class PurchaseAdminInline(admin.StackedInline):
@@ -30,3 +30,16 @@ class PurchaseAdmin(admin.ModelAdmin):
     search_fields = ("user__email", "product__title")
 print(444)
 # # Register your models here.
+
+@admin.register(Hotels)
+class HotelsAdmin(admin.ModelAdmin):
+    list_display = ( "country", "title",  "description", "created_at")
+    fields = ("country", "title", "image",  "description", "created_at")
+    readonly_fields = ("created_at",)
+    search_fields = ("title", "description")
+    # inlines = (PurchaseAdminInline,)
+    print(3333)
+
+    def save_form(self, request, form, change):
+
+        return super().save_form(request, form, change)
