@@ -16,8 +16,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
-from products.views import index, hotels
-from users.views import users, register, login_view, logout_view
+from products.views import index
+from users.views import users, register, login_view, logout_view, hotels
 
 urlpatterns = [
     path('admin/', admin.site.urls),
