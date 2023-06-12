@@ -14,7 +14,7 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
     inlines = (PurchaseAdminInline,)
-    print(3333)
+
 
     def save_form(self, request, form, change):
 
@@ -28,7 +28,7 @@ class PurchaseAdmin(admin.ModelAdmin):
     fields = ("user", "product", "count", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("user__email", "product__title")
-print(444)
+
 # # Register your models here.
 
 @admin.register(Hotels)
@@ -38,8 +38,8 @@ class HotelsAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
     # inlines = (PurchaseAdminInline,)
-    print(3333)
 
     def save_form(self, request, form, change):
 
         return super().save_form(request, form, change)
+    

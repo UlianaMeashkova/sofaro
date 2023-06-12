@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from products.views import index
-from users.views import users, register, login_view, logout_view, hotels
+from users.views import users, register, login_view, logout_view, hotels, onehotel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,8 +29,9 @@ urlpatterns = [
     path('register/', register, name="register"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
-    path('hotels/', hotels, name="hotels"),
-    path('', index, name="index"),
+    path('hotels/', index, name="hotels"),
+    path('hotel/<hotel_id>/', onehotel, name="onehotel"),
+    path('', hotels, name="index"),
 ]
  
 
