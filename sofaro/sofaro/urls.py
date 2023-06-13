@@ -29,7 +29,7 @@ urlpatterns = [
     path('register/', register, name="register"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
-    path('hotels/', index, name="hotels"),
+    path('hotels/<country>/', index, name="hotels"),
     path('hotel/<hotel_id>/', onehotel, name="onehotel"),
     path('', hotels, name="index"),
 ]

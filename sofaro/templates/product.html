@@ -7,7 +7,7 @@
    <img src="{% static 'img/no-image.png' %}" class="card-img-top" alt="{{ product.title }}">
  {% endif %}
  <div class="card-body">
-   <h5 class="card-title"><a href="{% url "onehotel" product.id %}">{{ product.title }}</a></h5>
+   <h5 class="card-title"><a href="{% url "hotels" product.country %}">{{ product.title }}</a></h5>
    {% comment %} <h5 class="card-title"><a href="{% url "hotels" product.country %}">{{ product.country }}</a></h5> {% endcomment %}
    <p class="card-text">Description: {{ product.description }}</p>
    <p class="card-text">Country: {{ product.country }}</p>
@@ -20,3 +20,5 @@
    </p>
  </div>
 </div>
+
+{% comment %} <h5 class="card-title"><a href="{% url "onehotel" product.id %}">{{ product.title }}</a></h5> {% endcomment %}
