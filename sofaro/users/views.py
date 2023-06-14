@@ -63,10 +63,9 @@ def logout_view(request):
     logout(request)
     return redirect("index")
 
+def countries(request):
+    print("4444444")
 
-
-
-def hotels(request):
     title = request.GET.get("title")
     purchases__count = request.GET.get("purchases__count")
 
@@ -86,51 +85,40 @@ def hotels(request):
     cache.set(f"products-view-{title}-{purchases__count}", response, 60 * 60)
     return response
 
-
-def hotels(request):
+def countries(request):
+    print("1121321123")
     search = request.GET.get("search")
 
-    hotels = Hotels.objects.all()
+    countries = Hotels.objects.all()
 
     if search is not None:
-        hotels = hotels.filter(Q(title__icontains=search) | Q(description__icontains=search))
+        countries = countries.filter(Q(title__icontains=search) | Q(description__icontains=search))
 
-    response = render(request, "index.html", {"products": hotels})
+    response = render(request, "countries.html", {"countries": countries})
     return response
 
-
-
-
-def onehotel(request, hotel_id):
+def oneHotel(request, hotel_id):
     title = request.GET.get("title")
     purchases__count = request.GET.get("purchases__count")
 
-    result = cache.get(f"products-view-{title}-{purchases__count}-{request.user.id}")
-    if result is not None:
-        return result
-
-    onehotel = Product.objects.filter(id=hotel_id)
+    oneHotel = Product.objects.filter(id=hotel_id)
 
     if title is not None:
-        onehotel = Product.filter(title__icontains=title)
+        oneHotel = Product.filter(title__icontains=title)
 
     if purchases__count is not None:
-        onehotel = Product.filter(purchases__count=purchases__count)
+        oneHotel = Product.filter(purchases__count=purchases__count)
 
-    response = render(request, "index.html", {"products": onehotel})
-    cache.set(f"products-view-{title}-{purchases__count}", response, 60 * 60)
+    response = render(request, "oneHotel.html", {"oneHotel": oneHotel})
     return response
 
-def onehotel(request, hotel_id):
+def oneHotel(request, hotel_id):
     search = request.GET.get("search")
 
-    onehotel = Product.objects.filter(id=hotel_id)
+    oneHotel = Product.objects.get(id=hotel_id)
 
-    if search is not None:
-        onehotel = onehotel.filter(Q(title__icontains=search) | Q(description__icontains=search) | Q(price__icontains=search))
+    print("oneHoteloneHotel", oneHotel)
 
-
-
-    response = render(request, "index.html", {"products": onehotel})
+    response = render(request, "oneHotel.html", {"oneHotel": oneHotel})
    
     return response

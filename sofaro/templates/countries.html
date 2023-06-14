@@ -9,12 +9,12 @@
     SOFARO HOTELS
   </h1>
   <div class="row mb-5">
-  {% for product in products %}
+  {% for country in countries %}
     {% if forloop.counter0|divisibleby:3 %}
       </div><div class="row mb-3">
     {% endif %}
     <div class="col-3">
-      {% include "product.html" %}
+      {% include "country.html" %}
     </div>
   {% endfor %}
   </div>

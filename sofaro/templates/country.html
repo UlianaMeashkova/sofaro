@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="card">
+ {% if country.image %}
+   <img src="{{ country.image.url }}" class="card-img-top" alt="{{ country.title }}">
+ {% else %}
+   <img src="{% static 'img/no-image.png' %}" class="card-img-top" alt="{{ country.title }}">
+ {% endif %}
+ <div class="card-body">
+   <h5 class="card-title"><a href="{% url "hotels" country.country %}">{{ country.title }}</a></h5>
+   <p class="card-text">Description: {{ country.description }}</p>
+   <p class="card-text">Country: {{ country.country }}</p>
+   {% comment %} <p class="card-text">Price: {{ country.price }} BYN</p>
+   <p class="card-text">Price: {{ country.price_usd }} USD</p> {% endcomment %}
+   <p>
+    <img src="5d8e8421532dade28c8204a1f0a60b01.jpg.webp" alt="" class="scale">
+    <img src="dubaj-informatsiya-dlya-turistov.jpg" alt="" class="scale">
+    <img src="newsbel.by-20.01.2022-hrxmbf0uj8pjnmqw8zueywkclj4shhus.jpg" alt="" class="scale">
+   </p>
+ </div>
+</div>
+
+{% comment %} <h5 class="card-title"><a href="{% url "onehotel" country.id %}">{{ country.title }}</a></h5> {% endcomment %}

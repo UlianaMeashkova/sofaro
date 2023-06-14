@@ -16,8 +16,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
-from products.views import index
-from users.views import users, register, login_view, logout_view, hotels, onehotel
+from products.views import hotels
+from users.views import users, register, login_view, logout_view, countries, oneHotel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,9 +29,9 @@ urlpatterns = [
     path('register/', register, name="register"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
-    path('hotels/<country>/', index, name="hotels"),
-    path('hotel/<hotel_id>/', onehotel, name="onehotel"),
-    path('', hotels, name="index"),
+    path('hotels/<country>/', hotels, name="hotels"),
+    path('hotel/<hotel_id>/', oneHotel, name="oneHotel"),
+    path('', countries, name="index"),
 ]
  
 

@@ -8,7 +8,7 @@ from products.models import Product
 logger = logging.getLogger(__name__)
 
 
-def index(request, country):
+def hotels(request, country):
     title = request.GET.get("title")
     purchases__count = request.GET.get("purchases__count")
 
@@ -28,14 +28,14 @@ def index(request, country):
     cache.set(f"products-view-{title}-{purchases__count}", response, 60 * 60)
     return response
 
-def index(request, country):
+def hotels(request, country):
     search = request.GET.get("search")
 
-    products = Product.objects.filter(country=country)
+    hotels = Product.objects.filter(country=country)
 
     if search is not None:
-        products = products.filter(Q(title__icontains=search) | Q(description__icontains=search) | Q(price__icontains=search))
+        hotels = hotels.filter(Q(title__icontains=search) | Q(description__icontains=search) | Q(price__icontains=search))
 
-    response = render(request, "index.html", {"products": products})
+    response = render(request, "hotels.html", {"hotels": hotels})
     return response
 

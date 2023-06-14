@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}hotels{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    <img src="media/391fd53d-842a-4e15-a0a3-56486b518c61-benzin-preview.png" width="70">
+    SOFARO HOTELS
+  </h1>
+  <div class="row mb-5">
+  {% for oneHotel in hotels %}
+    {% if forloop.counter0|divisibleby:3 %}
+      </div><div class="row mb-3">
+    {% endif %}
+    <div class="col-3">
+      {% load static %}
+      <div class="card">
+       {% if oneHotel.image %}
+         <img src="{{ oneHotel.image.url }}" class="card-img-top" alt="{{ oneHotel.title }}">
+       {% else %}
+         <img src="{% static 'img/no-image.png' %}" class="card-img-top" alt="{{ oneHotel.title }}">
+       {% endif %}
+       <div class="card-body">
+         <h5 class="card-title"><a href="{% url "oneHotel" oneHotel.id %}">{{ oneHotel.title }}</a></h5>
+         <p class="card-text">Description: {{ oneHotel.description }}</p>
+         <p class="card-text">Country: {{ oneHotel.country }}</p>
+         <p class="card-text">Price: {{ oneHotel.price }} BYN</p>
+         <p class="card-text">Price: {{ oneHotel.price_usd }} USD</p>
+         <p>
+          <img src="5d8e8421532dade28c8204a1f0a60b01.jpg.webp" alt="" class="scale">
+          <img src="dubaj-informatsiya-dlya-turistov.jpg" alt="" class="scale">
+          <img src="newsbel.by-20.01.2022-hrxmbf0uj8pjnmqw8zueywkclj4shhus.jpg" alt="" class="scale">
+         </p>
+       </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+ {% endblock %}
+</div>
+

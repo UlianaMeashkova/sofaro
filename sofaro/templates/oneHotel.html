@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}hotels{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    <img src="media/391fd53d-842a-4e15-a0a3-56486b518c61-benzin-preview.png" width="70">
+    SOFARO HOTELS
+  </h1>
+  <div class="row mb-5">
+{% load static %}
+
+<div class="card">
+ {% if oneHotel.image %}
+   <img src="{{ oneHotel.image.url }}" class="card-img-top" alt="{{ oneHotel.title }}">
+ {% else %}
+   <img src="{% static 'img/no-image.png' %}" class="card-img-top" alt="{{ oneHotel.title }}">
+ {% endif %}
+ <div class="card-body">
+   <h5 class="card-title">{{ oneHotel.title }}</h5>
+   <p class="card-text">Description: {{ oneHotel.description }}</p>
+   <p class="card-text">Country: {{ oneHotel.country }}</p>
+   <p class="card-text">Price: {{ oneHotel.price }} BYN</p>
+   <p class="card-text">Price: {{ oneHotel.price_usd }} USD</p>
+   <p>
+   </p>
+ </div>
+</div>
+ {% endblock %}
+</div>
+
