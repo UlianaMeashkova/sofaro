@@ -4,15 +4,15 @@
 
 {% block content %}
 <div class="container">
-  <h1>
-    <img src="media/391fd53d-842a-4e15-a0a3-56486b518c61-benzin-preview.png" width="70">
+  {% comment %} <h1> {% endcomment %}
+    {% comment %} <img src="media/391fd53d-842a-4e15-a0a3-56486b518c61-benzin-preview.png" width="70"> {% endcomment %}
     SOFARO HOTELS
-  </h1>
+  {% comment %} </h1> {% endcomment %}
   <div class="row mb-5">
   {% for oneHotel in hotels %}
-    {% if forloop.counter0|divisibleby:3 %}
+    {% comment %} {% if forloop.counter0|divisibleby:3 %}
       </div><div class="row mb-3">
-    {% endif %}
+    {% endif %} {% endcomment %}
     <div class="col-3">
       {% load static %}
       <div class="card">

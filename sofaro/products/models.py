@@ -7,7 +7,7 @@ from django.db import models
 
 COUNTRY_CHOICES = (
     ("Турция", "ТУРЦИЯ"),
-    ("Оаэ", "ОАЭ"),
+    ("ОАЭ", "ОАЭ"),
     ("Египет", "ЕГИПЕТ"),
     ("Греция", "ГРЕЦИЯ")
 )
@@ -30,7 +30,7 @@ class Product(models.Model):
         return f"Product: {self.title} - {self.price}"
     
 
-class Purchase(models.Model):
+class Booking(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="purchases"
     )
@@ -42,7 +42,7 @@ class Purchase(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def __str__(self):
-        return f"Purchase: {self.user} - {self.product} - {self.count}"
+        return f"Booking: {self.user} - {self.product} - {self.count}"
 
 
 

@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 
-from users.forms import RegisterForm, LoginForm
+from users.forms import RegisterForm, LoginForm, BookingForm
 import logging
 from django.core.cache import cache
 from django.shortcuts import render
@@ -122,3 +122,28 @@ def oneHotel(request, hotel_id):
     response = render(request, "oneHotel.html", {"oneHotel": oneHotel})
    
     return response
+
+
+def booking(request):
+    if request.method == "POST":
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                request=request,
+                username=form.cleaned_data["email"],
+                password=form.cleaned_data["password"],
+            )
+            if user is None:
+                return HttpResponse("BadRequest", status=400)
+            login(request, user)
+            return redirect("goodBook")
+    else:
+        form = BookingForm()
+    return render(request, "booking.html", {"form": form})
+
+def goodBook(request):
+    return render(request, "goodBook.html")
+
+
+# def contacts(request):
+#     return render(request, "contacts.html")

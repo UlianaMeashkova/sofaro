@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from products.models import Product, Purchase, Hotels
+from products.models import Product, Booking, Hotels
 
 
-class PurchaseAdminInline(admin.StackedInline):
-    model = Purchase
+class BookingAdminInline(admin.StackedInline):
+    model = Booking
 
 
 @admin.register(Product)
@@ -13,7 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
     fields = ("title", "image", "price","price_usd", "country", "description", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
-    inlines = (PurchaseAdminInline,)
+    inlines = (BookingAdminInline,)
 
 
     def save_form(self, request, form, change):
@@ -22,8 +22,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(Purchase)
-class PurchaseAdmin(admin.ModelAdmin):
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
     list_display = ("user", "product", "count", "created_at")
     fields = ("user", "product", "count", "created_at")
     readonly_fields = ("created_at",)
@@ -37,7 +37,7 @@ class HotelsAdmin(admin.ModelAdmin):
     fields = ("country", "title", "image",  "description", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
-    # inlines = (PurchaseAdminInline,)
+    # inlines = (BookingAdminInline,)
 
     def save_form(self, request, form, change):
 
