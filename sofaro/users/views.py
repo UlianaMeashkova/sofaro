@@ -1,7 +1,7 @@
 import logging
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 
@@ -11,7 +11,7 @@ from django.core.cache import cache
 from django.shortcuts import render
 
 from django.db.models import Q
-from products.models import Hotels, Product
+from products.models import Hotels, Product, ProductImage
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +64,7 @@ def logout_view(request):
     return redirect("index")
 
 def countries(request):
-    print("4444444")
+
 
     title = request.GET.get("title")
     purchases__count = request.GET.get("purchases__count")
@@ -86,7 +86,7 @@ def countries(request):
     return response
 
 def countries(request):
-    print("1121321123")
+
     search = request.GET.get("search")
 
     countries = Hotels.objects.all()
@@ -145,5 +145,13 @@ def goodBook(request):
     return render(request, "goodBook.html")
 
 
-# def contacts(request):
-#     return render(request, "contacts.html")
+def contacts(request):
+    return render(request, "contacts.html")
+
+def detail_view (request, id):
+    product = get_list_or_404(Product, id=id)
+    photos = ProductImage.objects.filter(product=product)
+    return render (request, "oneHotel.html",{
+        'product':product,
+        'photos':photos
+    })

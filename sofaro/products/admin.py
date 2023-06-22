@@ -1,10 +1,14 @@
 from django.contrib import admin
 
-from products.models import Product, Booking, Hotels
+from products.models import Product, Booking, Hotels, ProductImage
 
 
 class BookingAdminInline(admin.StackedInline):
     model = Booking
+
+class ProductImageAdmin(admin.StackedInline):
+    model=ProductImage
+
 
 
 @admin.register(Product)
@@ -13,14 +17,19 @@ class ProductAdmin(admin.ModelAdmin):
     fields = ("title", "image", "price","price_usd", "country", "description", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
-    inlines = (BookingAdminInline,)
+    inlines = (BookingAdminInline, ProductImageAdmin,)
 
 
     def save_form(self, request, form, change):
 
         return super().save_form(request, form, change)
 
+class Meta:
+    model=Product
 
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    pass
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
@@ -28,6 +37,10 @@ class BookingAdmin(admin.ModelAdmin):
     fields = ("user", "product", "count", "created_at")
     readonly_fields = ("created_at",)
     search_fields = ("user__email", "product__title")
+
+    def save_form(self, request, form, change):
+
+        return super().save_form(request, form, change)
 
 # # Register your models here.
 
@@ -42,4 +55,6 @@ class HotelsAdmin(admin.ModelAdmin):
     def save_form(self, request, form, change):
 
         return super().save_form(request, form, change)
+    
+
     

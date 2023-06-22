@@ -85,9 +85,9 @@
   {% block styles %}{% endblock %}
 </head>
 <body>
-  {% comment %} <a href="{% url "index" %}"><button type="button" class="btn btn-outline-warning">Countries</button> {% endcomment %}
-  {% comment %} <a href="{% url "register" %}"><button type="button" class="btn btn-outline-info">Register</button> {% endcomment %}
-  {% comment %} <a href="{% url "contacts" %}"><button type="button" class="btn btn-outline-light">Contacts</button> {% endcomment %}
+  <a href="{% url "index" %}"><button type="button" class="btn btn-outline-warning">Countries</button> </a>
+  <a href="{% url "register" %}"><button type="button" class="btn btn-outline-info">Register</button> </a>
+  <a href="{% url "contacts" %}"><button type="button" class="btn btn-outline-light">Contacts</button> </a>
   {% include "search.html" %}
   {% block content %}{% endblock %}
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
