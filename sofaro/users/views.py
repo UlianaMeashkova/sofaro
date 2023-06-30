@@ -116,13 +116,17 @@ def oneHotel(request, hotel_id):
     search = request.GET.get("search")
 
     oneHotel = Product.objects.get(id=hotel_id)
-
+    images = ProductImage.objects.all()
+    if hotel_id is not None:
+        images = images.filter(product_id=hotel_id)
+    print("hotel_idhotel_id", hotel_id)
     print("oneHoteloneHotel", oneHotel)
+    print("filteredImages", images)
 
-    response = render(request, "oneHotel.html", {"oneHotel": oneHotel})
+
+    response = render(request, "oneHotel.html", {"oneHotel": oneHotel, "images": images})
    
     return response
-
 
 def booking(request):
     if request.method == "POST":

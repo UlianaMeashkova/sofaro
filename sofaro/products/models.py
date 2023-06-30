@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 
 
+
 COUNTRY_CHOICES = (
     ("Турция", "ТУРЦИЯ"),
     ("ОАЭ", "ОАЭ"),
@@ -35,8 +36,7 @@ class ProductImage(models.Model):
     
 
     def __str__(self):
-        # return self.product.title
-        return "1222212"
+        return f"ProductImage: {self.image} - {self.product}"
 
     
 
@@ -71,3 +71,19 @@ class Hotels(models.Model):
         return f"Hotels: {self.title} - {self.country}"
     
 
+class Comment(models.Model):  
+    post = models.ForeignKey(Product,  
+			     on_delete=models.CASCADE,  
+			     related_name='comments')  
+    name = models.CharField(max_length=80)  
+    email = models.EmailField()  
+    body = models.TextField()  
+    created = models.DateTimeField(auto_now_add=True)  
+    updated = models.DateTimeField(auto_now=True)  
+    active = models.BooleanField(default=True)  
+      
+    class Meta:  
+        ordering = ('created',)  
+          
+    def __str__(self):  
+        return 'Comment by {} on {}'.format(self.name, self.post)

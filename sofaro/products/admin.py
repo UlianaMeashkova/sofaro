@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Product, Booking, Hotels, ProductImage
+from products.models import Product, Booking, Hotels, ProductImage, Comment
 
 
 class BookingAdminInline(admin.StackedInline):
@@ -55,6 +55,12 @@ class HotelsAdmin(admin.ModelAdmin):
     def save_form(self, request, form, change):
 
         return super().save_form(request, form, change)
+    
+@admin.register(Comment)  
+class CommentAdmin(admin.ModelAdmin):  
+    list_display = ('name', 'email', 'post', 'created', 'active')  
+    list_filter = ('active', 'created', 'updated')  
+    search_fields = ('name', 'email', 'body')
     
 
     
