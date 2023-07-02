@@ -1,7 +1,7 @@
 import logging
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 
@@ -11,7 +11,9 @@ from django.core.cache import cache
 from django.shortcuts import render
 
 from django.db.models import Q
-from products.models import Hotels, Product, ProductImage
+from products.models import Hotels, Product, ProductImage, Comment
+from django.core.exceptions import ObjectDoesNotExist
+from users.forms import CommentForm
 
 logger = logging.getLogger(__name__)
 
@@ -64,8 +66,6 @@ def logout_view(request):
     return redirect("index")
 
 def countries(request):
-
-
     title = request.GET.get("title")
     purchases__count = request.GET.get("purchases__count")
 
@@ -159,3 +159,46 @@ def detail_view (request, id):
         'product':product,
         'photos':photos
     })
+
+
+
+def post_detail(request, year, month, day, post):
+    post = get_object_or_404(Product, slug=post,
+                                   status='published',
+                                   publish__year=year,
+                                   publish__month=month,
+                                   publish__day=day)
+    # List of active comments for this post
+    comments = Comment.filter(active=True)
+
+    if request.method == 'POST':
+        # A comment was posted
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.post = post
+            # Save the comment to the database
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+    return render(request,
+                  'blog/post/detail.html',
+                 {'post': post,
+                  'comments': comments,
+                  'comment_form': comment_form})
+
+
+def comment(request):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            return redirect("leaveComment")
+    else:
+        form = CommentForm()
+    return render(request, "comment.html", {"form": form})
+
+def leaveComment(request):
+    return render(request, "leaveComment.html")
+

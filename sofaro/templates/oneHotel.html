@@ -43,43 +43,7 @@
   </div>
 
 {% load static %}
-{% comment %} 
-<div class="card">
-  
- {% if oneHotel.image %}
-   <img src="{{ oneHotel.image.url }}" class="card-img-top" alt="{{ oneHotel.title }}">
- {% else %}
-   <img src="{% static 'img/no-image.png' %}" class="card-img-top" alt="{{ oneHotel.title }}">
- {% endif %} {% endcomment %}
 
-
-
-{% comment %} <div id="carouselExampleIndicators" class="carousel slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="165634-vodnoe_bungalo_antenna-maldivy-villa-bungalo-more-550x310.jpg" class="d-block w-100" alt="scale">
-    </div>
-    <div class="carousel-item">
-      <img src="168509-gidroresursy-zemlya-atmosfera-atmosfera_zemli-voda-550x310.jpg" class="d-block w-100" alt="scale">
-    </div>
-    <div class="carousel-item">
-      <img src="167753-more-plyazh-voda-oblako-rastenie-550x310.jpg" class="d-block w-100" alt="scale">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div> {% endcomment %}
 <div class="card-body">
    <h5 class="card-title">{{ oneHotel.title }} </h5>
    <a href="{% url "booking" %}"><button type="submit" class="btn btn-primary">Booking</button></a>
@@ -87,9 +51,40 @@
    <p class="card-text">Country: {{ oneHotel.country }}</p>
    <p class="card-text">Price: {{ oneHotel.price }} BYN</p>
    <p class="card-text">Price: {{ oneHotel.price_usd }} USD</p>
+
+
+
+   {% with comment.count as total_comment %}
+    <h2>
+        {{ total_comment }} Comments {{ total_comment|pluralize }}
+    </h2>
+{% endwith %}
+{% for comments in comment %}
+    <div class="comment">
+        <p class="info">
+            Comment {{ forloop.counter }} by {{ comment.name }}
+            {{ comment.created }}
+        </p>
+        {{ comment.body|linebreaks }}
+    </div>
+{% empty %}
+    <p>There are no comments yet.</p>
+{% endfor %}
+{% if new_comment %}
+    <h2>Your comment has been added.</h2>
+{% else %}
+    <h2>Add a new comment</h2>
+    {{ comment_form.as_p }}
+    {% csrf_token %}
+    <a href="{% url "comment" %}"><button type="submit" class="btn btn-primary">Add comment</button></a>
+{% endif %}
+
+
+
    <p>
    </p>
- </div>
+
+</div>
 </div>
  {% endblock %}
 </div>

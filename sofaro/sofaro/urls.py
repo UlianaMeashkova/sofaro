@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from products.views import hotels
-from users.views import users, register, login_view, logout_view, countries, oneHotel, booking, goodBook, contacts
+from users.views import users, register, login_view, logout_view, countries, oneHotel, booking, goodBook, contacts, comment, leaveComment
 # , contacts
 
 urlpatterns = [
@@ -36,6 +36,9 @@ urlpatterns = [
     path('booking/', booking, name="booking"),
     path('goodBook/', goodBook, name="goodBook"),
     path('contacts/', contacts, name="contacts"),
+    path('comment/', comment, name="comment"),
+    path('leaveComment/', leaveComment, name="leaveComment"),
+
 ]
  
 
