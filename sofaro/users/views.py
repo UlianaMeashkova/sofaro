@@ -12,8 +12,9 @@ from django.shortcuts import render
 
 from django.db.models import Q
 from products.models import Hotels, Product, ProductImage, Comment
-from django.core.exceptions import ObjectDoesNotExist
 from users.forms import CommentForm
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -119,10 +120,6 @@ def oneHotel(request, hotel_id):
     images = ProductImage.objects.all()
     if hotel_id is not None:
         images = images.filter(product_id=hotel_id)
-    print("hotel_idhotel_id", hotel_id)
-    print("oneHoteloneHotel", oneHotel)
-    print("filteredImages", images)
-
 
     response = render(request, "oneHotel.html", {"oneHotel": oneHotel, "images": images})
    
@@ -162,42 +159,49 @@ def detail_view (request, id):
 
 
 
-def post_detail(request, year, month, day, post):
-    post = get_object_or_404(Product, slug=post,
-                                   status='published',
-                                   publish__year=year,
-                                   publish__month=month,
-                                   publish__day=day)
-    # List of active comments for this post
-    comments = Comment.filter(active=True)
 
+
+def comment(request, hotel_id):
     if request.method == 'POST':
-        # A comment was posted
-        comment_form = CommentForm(data=request.POST)
+        comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            # Create Comment object but don't save to database yet
-            new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.post = post
-            # Save the comment to the database
-            new_comment.save()
+            post = get_object_or_404(Product, id=hotel_id)
+            comment = Comment(
+                name=comment_form.cleaned_data["name"],
+                email=comment_form.cleaned_data["email"],
+                body=comment_form.cleaned_data["body"],
+                post=post
+            )
+            comment.save()
+            return render(request, "leaveComment.html")
     else:
         comment_form = CommentForm()
-    return render(request,
-                  'blog/post/detail.html',
-                 {'post': post,
-                  'comments': comments,
-                  'comment_form': comment_form})
+        return render(request, "comment.html", {"form": comment_form }) 
+
+# def comment(request, oneHotel_id):
+    # form = CommentForm(request.POST)
+    # print("form", request)
+    # print("idididid", oneHotel_id)
+    # if request.method == "POST" and form.is_valid():
+    #     new_comment = form.save(commit=False)
+    #     new_comment.post = 2
+    #     new_comment.save()
+    #     print("111111")
+
+        # a = Comment()
+        # a.save()
+        # new_comment = form.save(commit=False)
+                
+            #     # new_comment.product = product
+
+            #     new_comment.save()
+        # return redirect("leaveComment")
+    # else:
+    #     form = CommentForm()
+#     return render(request, "comment.html", {"form": form})
 
 
-def comment(request):
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            return redirect("leaveComment")
-    else:
-        form = CommentForm()
-    return render(request, "comment.html", {"form": form})
+
 
 def leaveComment(request):
     return render(request, "leaveComment.html")

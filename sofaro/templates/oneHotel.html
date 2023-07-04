@@ -59,24 +59,27 @@
         {{ total_comment }} Comments {{ total_comment|pluralize }}
     </h2>
 {% endwith %}
-{% for comments in comment %}
-    <div class="comment">
-        <p class="info">
-            Comment {{ forloop.counter }} by {{ comment.name }}
-            {{ comment.created }}
-        </p>
-        {{ comment.body|linebreaks }}
-    </div>
-{% empty %}
-    <p>There are no comments yet.</p>
+
+{% for comment in comments %}  
+  <div class="comment">  
+    <p class="info">  
+      Comment {{ forloop.counter }} by {{ comment.name }}  
+      {{ comment.created }}  
+    </p>  
+  {{ comment.body|linebreaks }}  
+  </div>  
+{% empty %}  
+  <p>There are no comments yet.</p>  
 {% endfor %}
+
+
 {% if new_comment %}
     <h2>Your comment has been added.</h2>
 {% else %}
     <h2>Add a new comment</h2>
     {{ comment_form.as_p }}
     {% csrf_token %}
-    <a href="{% url "comment" %}"><button type="submit" class="btn btn-primary">Add comment</button></a>
+    <a href="{% url "comment" oneHotel.id %}"><button type="submit" class="btn btn-primary">Add comment</button></a>
 {% endif %}
 
 
