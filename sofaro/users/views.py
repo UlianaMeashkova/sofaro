@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_list_or_404, get_object_or_40
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 
-from users.forms import RegisterForm, LoginForm, BookingForm
+from users.forms import RegisterForm, LoginForm, BookingForm, ScoreForm
 import logging
 from django.core.cache import cache
 from django.shortcuts import render
@@ -13,6 +13,9 @@ from django.shortcuts import render
 from django.db.models import Q
 from products.models import Hotels, Product, ProductImage, Comment
 from users.forms import CommentForm
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 
@@ -118,10 +121,19 @@ def oneHotel(request, hotel_id):
 
     oneHotel = Product.objects.get(id=hotel_id)
     images = ProductImage.objects.all()
+    comments = oneHotel.comments.all()
     if hotel_id is not None:
         images = images.filter(product_id=hotel_id)
 
-    response = render(request, "oneHotel.html", {"oneHotel": oneHotel, "images": images})
+    response = render(
+        request, 
+        "oneHotel.html", 
+        {
+            "oneHotel": oneHotel, 
+            "images": images, 
+            "comments": comments
+        }
+    )
    
     return response
 
@@ -137,6 +149,13 @@ def booking(request):
             if user is None:
                 return HttpResponse("BadRequest", status=400)
             login(request, user)
+            
+            send_mail(
+                "Подтверждение брони", 
+                "Вы успешно забронировали отель!", 
+                settings.EMAIL_HOST_USER, 
+                [form.cleaned_data["email"]]
+            )
             return redirect("goodBook")
     else:
         form = BookingForm()
@@ -205,4 +224,26 @@ def comment(request, hotel_id):
 
 def leaveComment(request):
     return render(request, "leaveComment.html")
+
+
+def score(request, hotel_id):
+    if request.method == "POST":
+        score_form = ScoreForm(request.POST)
+        if score_form.is_valid():
+            post = get_object_or_404(Product, id=hotel_id)
+            new_score = score_form.save(commit=False)
+            new_score.post = post
+            new_score.save()
+            return render(request, "leaveScore.html")
+    else:
+        score_form = ScoreForm()
+        return render(
+            request,
+            "score.html",
+            {
+                "form": score_form
+            }
+        )
+
+
 

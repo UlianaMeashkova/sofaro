@@ -12,4 +12,3 @@ pytest-django>=4.5.2
 factory-boy>=3.2.1
 pytest-factoryboy>=2.5.0
 faker>=13.15.0
-gettext = 23.1.2

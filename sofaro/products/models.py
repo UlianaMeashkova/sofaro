@@ -30,6 +30,11 @@ class Product(models.Model):
     def __str__(self):
         return f"Product: {self.title} - {self.price}"
     
+    
+    def get_score(self):
+        scores = [score.value for score in self.scores.all()]
+        return sum(scores) / len(scores)
+    
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="products/")
@@ -88,3 +93,14 @@ class Comment(models.Model):
           
     def __str__(self):  
         return 'Comment by {} on {}'.format(self.name, self.post)
+    
+class Score(models.Model):
+    post = models.ForeignKey(
+        Product,  
+        on_delete=models.CASCADE,  
+        related_name='scores',
+    )
+    value = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.post.title} {self.value}"

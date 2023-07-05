@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Product, Booking, Hotels, ProductImage, Comment
+from products.models import Product, Booking, Hotels, ProductImage, Comment, Score
 
 
 class BookingAdminInline(admin.StackedInline):
@@ -62,5 +62,9 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('active', 'created', 'updated')  
     search_fields = ('name', 'email', 'body')
     
+
+@admin.register(Score)
+class ScoreAdmin(admin.ModelAdmin):
+    pass
 
     

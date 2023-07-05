@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from products.views import hotels
-from users.views import users, register, login_view, logout_view, countries, oneHotel, booking, goodBook, contacts, comment, leaveComment
+from users.views import users, register, login_view, logout_view, countries, oneHotel, booking, goodBook, contacts, comment, leaveComment, score
 # , contacts
 
 urlpatterns = [
@@ -38,6 +38,8 @@ urlpatterns = [
     path('contacts/', contacts, name="contacts"),
     path('comment/<hotel_id>', comment, name="comment"),
     path('leaveComment/', leaveComment, name="leaveComment"),
+    
+    path('score/<hotel_id>', score, name="score")
 
 ]
  
