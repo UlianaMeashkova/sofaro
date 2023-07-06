@@ -16,5 +16,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-shop/media/
+sofaro/media/
+sofaro/products
 
