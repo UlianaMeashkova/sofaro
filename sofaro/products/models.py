@@ -33,7 +33,9 @@ class Product(models.Model):
     
     def get_score(self):
         scores = [score.value for score in self.scores.all()]
-        return sum(scores) / len(scores)
+        if scores:
+           return sum(scores) / len(scores)
+        return 0
     
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
