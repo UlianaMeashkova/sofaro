@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
+    "rest_framework.authtoken",
     'crispy_forms',
     'crispy_bootstrap5',
     'sofaro',
@@ -62,6 +64,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'sofaro.urls'
+
 
 TEMPLATES = [
     {
@@ -148,8 +151,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
+
 
 
 def _(x):
@@ -192,3 +194,5 @@ EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", 'false') != "True"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
