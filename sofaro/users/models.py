@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.db import models
 
-
-
 class Users(models.Model):
     user = models.OneToOneField(
     settings.AUTH_USER_MODEL, on_delete=models.CASCADE
@@ -15,5 +13,3 @@ class Users(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True, db_index=True
     )
-
-# Create your models here.

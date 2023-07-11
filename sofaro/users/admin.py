@@ -11,5 +11,3 @@ class UsersAdmin(admin.ModelAdmin):
 #    fields = ("user", "first_name", "last_name", "age" "created_at")
 #    readonly_fields = ("created_at",)
 #    search_fields = ("first_name", "last_name")
-
-# Register your models here.

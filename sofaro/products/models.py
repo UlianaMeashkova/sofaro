@@ -4,15 +4,12 @@ from decimal import Decimal
 from django.conf import settings
 from django.db import models
 
-
-
 COUNTRY_CHOICES = (
     ("Турция", "ТУРЦИЯ"),
     ("ОАЭ", "ОАЭ"),
     ("Египет", "ЕГИПЕТ"),
     ("Греция", "ГРЕЦИЯ")
 )
-
 
 class Product(models.Model):
     external_id = models.CharField(max_length=255, blank=True, null=True)
@@ -30,7 +27,6 @@ class Product(models.Model):
     def __str__(self):
         return f"Product: {self.title} - {self.price}"
     
-    
     def get_score(self):
         scores = [score.value for score in self.scores.all()]
         if scores:
@@ -43,9 +39,7 @@ class ProductImage(models.Model):
     
 
     def __str__(self):
-        return f"ProductImage: {self.image} - {self.product}"
-
-    
+        return f"ProductImage: {self.image} - {self.product}"  
 
 class Booking(models.Model):
     user = models.ForeignKey(
@@ -61,8 +55,6 @@ class Booking(models.Model):
     def __str__(self):
         return f"Booking: {self.user} - {self.product} - {self.count}"
 
-
-
 class Hotels(models.Model):
     external_id = models.CharField(max_length=255, blank=True, null=True)
     country = models.CharField(max_length=32, choices=COUNTRY_CHOICES, default= "Турция")
@@ -76,7 +68,6 @@ class Hotels(models.Model):
 
     def __str__(self):
         return f"Hotels: {self.title} - {self.country}"
-    
 
 class Comment(models.Model):
     post = models.ForeignKey(Product,  

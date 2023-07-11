@@ -17,16 +17,12 @@ from users.forms import CommentForm
 from django.core.mail import send_mail
 from django.conf import settings
 
-
-
 logger = logging.getLogger(__name__)
-
 
 def users(request):
     if request.GET.get("param"):
         logger.info(f"My param = {request.GET.get('param')}")
     return HttpResponse("Profiles view")
-
 
 def register(request):
     if request.method == "POST":
@@ -40,9 +36,7 @@ def register(request):
             user.save()
             return redirect("login")
     else:
-
         form = RegisterForm()
-
 
     return render(request, "register.html", {"form": form})
 
@@ -63,7 +57,6 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, "login.html", {"form": form})
-
 
 def logout_view(request):
     logout(request)
@@ -90,9 +83,7 @@ def countries(request):
     return response
 
 def countries(request):
-
     search = request.GET.get("search")
-
     countries = Hotels.objects.all()
 
     if search is not None:
@@ -117,8 +108,6 @@ def oneHotel(request, hotel_id):
     return response
 
 def oneHotel(request, hotel_id):
-    search = request.GET.get("search")
-
     oneHotel = Product.objects.get(id=hotel_id)
     images = ProductImage.objects.all()
     comments = oneHotel.comments.all()
@@ -141,15 +130,6 @@ def booking(request):
     if request.method == "POST":
         form = BookingForm(request.POST)
         if form.is_valid():
-            user = authenticate(
-                request=request,
-                username=form.cleaned_data["email"],
-                date=form.cleaned_data["date"],
-            )
-            if user is None:
-                return HttpResponse("BadRequest", status=400)
-            login(request, user)
-            
             send_mail(
                 "Подтверждение брони", 
                 "Вы успешно забронировали отель!", 
@@ -164,7 +144,6 @@ def booking(request):
 def goodBook(request):
     return render(request, "goodBook.html")
 
-
 def contacts(request):
     return render(request, "contacts.html")
 
@@ -175,10 +154,6 @@ def detail_view (request, id):
         'product':product,
         'photos':photos
     })
-
-
-
-
 
 def comment(request, hotel_id):
     if request.method == 'POST':
@@ -219,12 +194,8 @@ def comment(request, hotel_id):
     #     form = CommentForm()
 #     return render(request, "comment.html", {"form": form})
 
-
-
-
 def leaveComment(request):
     return render(request, "leaveComment.html")
-
 
 def score(request, hotel_id):
     if request.method == "POST":
@@ -244,6 +215,3 @@ def score(request, hotel_id):
                 "form": score_form
             }
         )
-
-
-

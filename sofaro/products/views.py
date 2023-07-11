@@ -7,7 +7,6 @@ from products.models import Product
 
 logger = logging.getLogger(__name__)
 
-
 def hotels(request, country):
     title = request.GET.get("title")
     purchases__count = request.GET.get("purchases__count")
@@ -38,4 +37,3 @@ def hotels(request, country):
 
     response = render(request, "hotels.html", {"hotels": hotels})
     return response
-

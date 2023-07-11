@@ -10,7 +10,6 @@ class RegisterForm(forms.Form):
     )
     age = forms.IntegerField(min_value=18, required=False)
 
-
 class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(
@@ -21,18 +20,11 @@ class BookingForm(forms.Form):
     first_name = forms.CharField(max_length=255)
     last_name = forms.CharField(max_length=255)
     email = forms.EmailField()
-    date = forms.DateTimeField(
-        input_formats=['%d/%m/%Y']
-    )
-    age = forms.IntegerField(min_value=18, required=False)
-
-
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('name', 'email', 'body')
-
 
 class ScoreForm(forms.ModelForm):
     class Meta:

@@ -9,8 +9,6 @@ class BookingAdminInline(admin.StackedInline):
 class ProductImageAdmin(admin.StackedInline):
     model=ProductImage
 
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("title", "price", "country", "description", "created_at")
@@ -18,7 +16,6 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at",)
     search_fields = ("title", "description")
     inlines = (BookingAdminInline, ProductImageAdmin,)
-
 
     def save_form(self, request, form, change):
 
@@ -42,8 +39,6 @@ class BookingAdmin(admin.ModelAdmin):
 
         return super().save_form(request, form, change)
 
-# # Register your models here.
-
 @admin.register(Hotels)
 class HotelsAdmin(admin.ModelAdmin):
     list_display = ( "country", "title",  "description", "created_at")
@@ -60,11 +55,8 @@ class HotelsAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):  
     list_display = ('name', 'email', 'post', 'created', 'active')  
     list_filter = ('active', 'created', 'updated')  
-    search_fields = ('name', 'email', 'body')
-    
+    search_fields = ('name', 'email', 'body') 
 
 @admin.register(Score)
 class ScoreAdmin(admin.ModelAdmin):
     pass
-
-    
