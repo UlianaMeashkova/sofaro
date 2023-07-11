@@ -144,7 +144,7 @@ def booking(request):
             user = authenticate(
                 request=request,
                 username=form.cleaned_data["email"],
-                password=form.cleaned_data["password"],
+                date=form.cleaned_data["date"],
             )
             if user is None:
                 return HttpResponse("BadRequest", status=400)

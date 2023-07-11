@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=sofaro
+      - POSTGRES_USER=sofaro
+      - POSTGRES_PASSWORD=sofaro
+
+  # redis:
+  #   image: redis:latest
+
+  django: &django
+    restart: always
+    image: mantiby/django:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app/
+    depends_on:
+      - postgres
+      # - redis
+    environment:
+      - POSTGRES_NAME=sofaro
+      - POSTGRES_USER=sofaro
+      - POSTGRES_PASS=sofaro
+      - POSTGRES_HOST=postgres
+      # - REDIS_HOST=redis
+    command: |
+      python sofaro/manage.py runserver 0.0.0.0:8000
+
+  # worker:
+  #   <<: *django
+  #   ports: [ ]
+  #   command: |
+  #     python sofaro/manage.py rqworker
+
+
+
+
